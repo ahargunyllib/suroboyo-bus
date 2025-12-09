@@ -1,4 +1,21 @@
 {
   "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
-  "extends": ["ultracite/core", "ultracite/react"]
+  "files": {
+    "includes": ["!nativewind-env.d.ts"]
+  },
+  "extends": ["ultracite/core", "ultracite/react"],
+  "assist": {
+    "actions": {
+      "source": {
+        "organizeImports": "off"
+      }
+    }
+  },
+  "linter": {
+    "rules": {
+      "performance": {
+        "noNamespaceImport": "off"
+      }
+    }
+  }
 }
