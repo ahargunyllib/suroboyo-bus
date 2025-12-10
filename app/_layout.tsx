@@ -1,53 +1,19 @@
-import {
-  Poppins_100Thin,
-  Poppins_100Thin_Italic,
-  Poppins_200ExtraLight,
-  Poppins_200ExtraLight_Italic,
-  Poppins_300Light,
-  Poppins_300Light_Italic,
-  Poppins_400Regular,
-  Poppins_400Regular_Italic,
-  Poppins_500Medium,
-  Poppins_500Medium_Italic,
-  Poppins_600SemiBold,
-  Poppins_600SemiBold_Italic,
-  Poppins_700Bold,
-  Poppins_700Bold_Italic,
-  Poppins_800ExtraBold,
-  Poppins_800ExtraBold_Italic,
-  Poppins_900Black,
-  Poppins_900Black_Italic,
-  useFonts,
-} from "@expo-google-fonts/poppins";
+import usePoppins from "@/utils/fonts/poppins";
+import useUrbanist from "@/utils/fonts/urbanist";
 import { PortalHost } from "@rn-primitives/portal";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
+import { StatusBar } from "expo-status-bar";
 import { useEffect } from "react";
 import "../global.css";
 
 SplashScreen.preventAutoHideAsync();
 
 export default function Layout() {
-  const [loaded, error] = useFonts({
-    Poppins_100Thin,
-    Poppins_100Thin_Italic,
-    Poppins_200ExtraLight,
-    Poppins_200ExtraLight_Italic,
-    Poppins_300Light,
-    Poppins_300Light_Italic,
-    Poppins_400Regular,
-    Poppins_400Regular_Italic,
-    Poppins_500Medium,
-    Poppins_500Medium_Italic,
-    Poppins_600SemiBold,
-    Poppins_600SemiBold_Italic,
-    Poppins_700Bold,
-    Poppins_700Bold_Italic,
-    Poppins_800ExtraBold,
-    Poppins_800ExtraBold_Italic,
-    Poppins_900Black,
-    Poppins_900Black_Italic,
-  });
+  const [poppinsLoaded, poppinsError] = usePoppins();
+  const [urbanistLoaded, urbanistError] = useUrbanist();
+  const loaded = poppinsLoaded && urbanistLoaded;
+  const error = poppinsError || urbanistError;
 
   useEffect(() => {
     if (loaded || error) {
@@ -62,6 +28,7 @@ export default function Layout() {
   return (
     <>
       <Stack screenOptions={{ headerShown: false }} />
+      <StatusBar />
       <PortalHost />
     </>
   );
