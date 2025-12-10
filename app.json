@@ -5,7 +5,7 @@
     "version": "1.0.0",
     "scheme": "suroboyo-bus",
     "platforms": ["ios", "android"],
-    "plugins": ["expo-router", "expo-font"],
+    "plugins": ["expo-router", "expo-font", "expo-asset"],
     "experiments": {
       "typedRoutes": true,
       "tsconfigPaths": true
