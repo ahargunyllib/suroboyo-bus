@@ -14,7 +14,7 @@ export default function TabLayout() {
         headerShown: false,
         tabBarLabel({ children }) {
           return (
-            <Text className="font-medium text-[#E02922] text-xs">
+            <Text className="font-medium font-poppins text-[#E02922] text-xs">
               {children}
             </Text>
           );
@@ -22,7 +22,7 @@ export default function TabLayout() {
         tabBarBackground() {
           return (
             <View
-              className="rounded-t-2xl border-gray-200 border-t bg-white shadow"
+              className="rounded-t-2xl border-[#CCCCCC] border-t bg-white shadow"
               style={StyleSheet.absoluteFill}
             />
           );
