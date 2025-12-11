@@ -5,6 +5,7 @@ import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
 import { useEffect } from "react";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 import "../global.css";
 
 SplashScreen.preventAutoHideAsync();
@@ -26,10 +27,10 @@ export default function Layout() {
   }
 
   return (
-    <>
+    <GestureHandlerRootView>
       <Stack screenOptions={{ headerShown: false }} />
       <StatusBar />
       <PortalHost />
-    </>
+    </GestureHandlerRootView>
   );
 }
