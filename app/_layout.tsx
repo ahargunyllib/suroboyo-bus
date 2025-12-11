@@ -1,6 +1,8 @@
+import { queryClient } from "@/lib/query-client";
 import usePoppins from "@/utils/fonts/poppins";
 import useUrbanist from "@/utils/fonts/urbanist";
 import { PortalHost } from "@rn-primitives/portal";
+import { QueryClientProvider } from "@tanstack/react-query";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
@@ -28,9 +30,11 @@ export default function Layout() {
 
   return (
     <GestureHandlerRootView>
-      <Stack screenOptions={{ headerShown: false }} />
-      <StatusBar />
-      <PortalHost />
+      <QueryClientProvider client={queryClient}>
+        <Stack screenOptions={{ headerShown: false }} />
+        <StatusBar />
+        <PortalHost />
+      </QueryClientProvider>
     </GestureHandlerRootView>
   );
 }
