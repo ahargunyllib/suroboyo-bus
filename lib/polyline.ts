@@ -14,7 +14,6 @@
  *
  * @see https://github.com/Project-OSRM/osrm-frontend/blob/master/WebContent/routing/OSRM.RoutingGeometry.js
  */
-
 export const decode = (str: string, precision = 5): [number, number][] => {
   let index = 0;
   let lat = 0;
