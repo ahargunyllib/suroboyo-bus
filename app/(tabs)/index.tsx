@@ -3,6 +3,7 @@ import { Icon } from "@/components/ui/icon";
 import { Text } from "@/components/ui/text";
 import { ASSETS, useAssets } from "@/hooks/use-assets";
 import { Image } from "expo-image";
+import { router } from "expo-router";
 import {
   BottleWineIcon,
   Building2Icon,
@@ -72,6 +73,11 @@ export default function Home() {
           <Text className="font-bold">Mau kemana hari ini??</Text>
           <Button
             className="justify-start rounded-lg shadow-none active:bg-background"
+            onPress={() =>
+              router.push({
+                pathname: "/trips",
+              })
+            }
             variant="outline"
           >
             <Icon as={SearchIcon} size={16} />
