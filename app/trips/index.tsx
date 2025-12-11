@@ -19,8 +19,8 @@ import { cn } from "../../lib/utils";
 
 export default function Screen() {
   return (
-    <SafeAreaView className="flex-1 gap-4 bg-white">
-      <View className="flex-row items-center gap-2 bg-white px-4">
+    <SafeAreaView className="flex-1 bg-white">
+      <View className="flex-row items-center gap-2 bg-white px-4 py-2">
         <Button onPress={() => router.back()} size="icon" variant="ghost">
           <Icon as={ArrowLeftIcon} className="text-black" size={24} />
         </Button>
@@ -52,7 +52,11 @@ export default function Screen() {
                 <Icon as={MapPinIcon} className="text-black" size={16} />
               </View>
             </View>
-            <Button size="icon" variant="ghost">
+            <Button
+              onPress={() => router.push("/trips/plan")}
+              size="icon"
+              variant="ghost"
+            >
               <Icon as={ArrowUpDownIcon} className="text-black" size={16} />
             </Button>
           </View>
