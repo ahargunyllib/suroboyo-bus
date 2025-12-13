@@ -127,6 +127,7 @@ function Menu() {
     {
       title: "Info Rute",
       icon: PlusIcon,
+      onPress: () => router.push("/routes"),
     },
     {
       title: "Peta Tematik",
