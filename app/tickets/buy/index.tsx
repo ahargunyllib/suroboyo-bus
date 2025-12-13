@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Icon } from "@/components/ui/icon";
 import { Text } from "@/components/ui/text";
-import { tickets } from "@/data/tickets";
+import { ticketOffers } from "@/data/tickets";
 import { router } from "expo-router";
 import { ArrowLeftIcon } from "lucide-react-native";
 import { FlatList, View } from "react-native";
@@ -20,7 +20,7 @@ export default function Screen() {
         <FlatList
           className="flex-1"
           contentContainerClassName="grow gap-4"
-          data={tickets}
+          data={ticketOffers}
           renderItem={({ item }) => (
             <View className="relative gap-2 rounded-lg bg-[#D41D07] p-4">
               <Text className="font-bold text-white">{item.name}</Text>

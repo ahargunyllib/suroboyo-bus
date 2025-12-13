@@ -1,4 +1,4 @@
-export const tickets = [
+export const ticketOffers = [
   {
     id: "student-ticket",
     name: "Tiket Pelajar",
@@ -11,6 +11,6 @@ export const tickets = [
   },
 ];
 
-export function getTicketById(id: string) {
-  return tickets.find((ticket) => ticket.id === id);
+export function getTicketOfferById(id: string) {
+  return ticketOffers.find((ticket) => ticket.id === id);
 }

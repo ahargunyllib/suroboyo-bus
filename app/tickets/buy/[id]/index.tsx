@@ -5,14 +5,14 @@ import { router, useGlobalSearchParams } from "expo-router";
 import { ArrowLeftIcon } from "lucide-react-native";
 import { ScrollView, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { getTicketById } from "../../../../data/tickets";
+import { getTicketOfferById } from "../../../../data/tickets";
 
 export default function Screen() {
   const { id } = useGlobalSearchParams<{
     id: "general-ticket" | "student-ticket";
   }>();
 
-  const ticket = getTicketById(id);
+  const ticket = getTicketOfferById(id);
   if (!ticket) {
     return null;
   }
