@@ -152,4 +152,6 @@ function AccordionContent({
   );
 }
 
-export { Accordion, AccordionContent, AccordionItem, AccordionTrigger };
+const useItemContext = AccordionPrimitive.useItemContext;
+
+export { Accordion, AccordionContent, AccordionItem, AccordionTrigger, useItemContext };

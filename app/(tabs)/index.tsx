@@ -137,6 +137,7 @@ function Menu() {
     {
       title: "FAQ",
       icon: MessageCircleMoreIcon,
+      onPress: () => router.push("/faq"),
     },
   ];
   return (
