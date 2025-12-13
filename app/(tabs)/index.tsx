@@ -122,6 +122,7 @@ function Menu() {
     {
       title: "Beli Tiket",
       icon: TicketIcon,
+      onPress: () => router.push("/tickets/buy"),
     },
     {
       title: "Info Rute",
@@ -146,6 +147,7 @@ function Menu() {
         <Button
           className="h-fit flex-col gap-2"
           key={menu.title}
+          onPress={menu.onPress}
           variant="ghost"
         >
           <View className="aspect-square rounded-full bg-[#D41D07] p-4">
