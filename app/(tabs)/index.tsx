@@ -132,6 +132,7 @@ function Menu() {
     {
       title: "Peta Tematik",
       icon: RouteIcon,
+      onPress: () => router.push("/maps"),
     },
     {
       title: "FAQ",
