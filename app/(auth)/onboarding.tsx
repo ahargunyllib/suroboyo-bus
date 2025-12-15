@@ -1,6 +1,7 @@
 import { Text } from "@/components/ui/text";
 import { ASSETS, useAssets } from "@/hooks/use-assets";
 import { Image } from "expo-image";
+import { router } from "expo-router";
 import { View } from "react-native";
 import {
   SafeAreaView,
@@ -34,13 +35,25 @@ export default function Screen() {
           </Text>
         </View>
         <View className="gap-2">
-          <Button className="rounded-full bg-[#E02922] shadow-none active:bg-[#E02922]/80">
+          <Button
+            className="rounded-full bg-[#E02922] shadow-none active:bg-[#E02922]/80"
+            onPress={() =>
+              router.push({
+                pathname: "/register",
+              })
+            }
+          >
             <Text className="font-poppins font-semibold text-white">
               Buat Akun
             </Text>
           </Button>
           <Button
             className="rounded-full border-[#E02922] shadow-none"
+            onPress={() =>
+              router.push({
+                pathname: "/login",
+              })
+            }
             variant="outline"
           >
             <Text className="font-poppins font-semibold text-[#E02922] group-active:text-[#E02922]">
