@@ -1,11 +1,12 @@
 export const plans = [
   {
     id: 1,
-    fromAddress: "Tunjungan Plaza",
-    toAddress: "Surabaya Zoo",
+    fromAddress: "Surabaya Zoo",
+    toAddress: "Tunjungan Plaza",
     type: "fastest" as const,
-    durationInMinutes: 25,
-    distanceInMeters: 8000,
+    durationInMinutes: 29,
+    distanceInMeters: 4300,
+    price: 2500,
     plans: [
       {
         id: 1,

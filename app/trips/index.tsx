@@ -1,13 +1,11 @@
-import { computeRoutesQueryOptions } from "@/api/google/query";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Icon } from "@/components/ui/icon";
 import { Input } from "@/components/ui/input";
 import { Text } from "@/components/ui/text";
-import { useDebounce } from "@/hooks/use-debounce";
+import { plans } from "@/data/plans";
 import { cn } from "@/lib/utils";
 import { useTripPlanStore } from "@/stores/use-trip-plan-store";
-import { useQuery } from "@tanstack/react-query";
 import { router } from "expo-router";
 import {
   ArrowLeftIcon,
@@ -28,26 +26,22 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Screen() {
   const [search, setSearch] = useState({ from: "", to: "" });
-  const debouncedSearch = useDebounce(search, 500);
-  const { setRequest, setRoute } = useTripPlanStore();
 
-  const { data } = useQuery(
-    computeRoutesQueryOptions(
-      {
-        origin: {
-          address: debouncedSearch.from,
-        },
-        destination: {
-          address: debouncedSearch.to,
-        },
-        computeAlternativeRoutes: true,
-        travelMode: "TRANSIT",
-      },
-      {
-        enabled: !!debouncedSearch.from && !!debouncedSearch.to,
-      }
-    )
-  );
+  const filteredPlans = plans.filter((plan) => {
+    if (search.from === "" || search.to === "") {
+      return false;
+    }
+
+    const fromMatch = plan.fromAddress
+      .toLowerCase()
+      .includes(search.from.toLowerCase());
+    const toMatch = plan.toAddress
+      .toLowerCase()
+      .includes(search.to.toLowerCase());
+    return fromMatch && toMatch;
+  });
+
+  const { setPlan } = useTripPlanStore();
 
   return (
     <SafeAreaView className="flex-1 bg-white">
@@ -106,7 +100,7 @@ export default function Screen() {
         <FlatList
           className="flex-1"
           contentContainerClassName="grow gap-4"
-          data={data?.routes || []}
+          data={filteredPlans}
           ListEmptyComponent={
             <View className="h-full flex-row items-center justify-center gap-2">
               <Icon as={RouteIcon} className="text-[#E02922]" size={24} />
@@ -115,21 +109,12 @@ export default function Screen() {
               </Text>
             </View>
           }
-          renderItem={({ item: route }) => (
+          renderItem={({ item: plan }) => (
             <TouchableOpacity
               className="flex-row justify-between gap-2 rounded-lg bg-[#E02922] p-4"
               onPress={() => {
-                setRequest({
-                  origin: {
-                    address: debouncedSearch.from,
-                  },
-                  destination: {
-                    address: debouncedSearch.to,
-                  },
-                  computeAlternativeRoutes: false,
-                  travelMode: "TRANSIT",
-                });
-                setRoute(route);
+                setPlan(plan);
+
                 router.push({
                   pathname: "/trips/plan",
                 });
@@ -142,13 +127,13 @@ export default function Screen() {
                       Lama Perjalanan
                     </Text>
                     <Text className="font-bold text-white text-xl">
-                      {route.localizedValues.duration.text}
+                      {plan.durationInMinutes} menit
                     </Text>
                   </View>
                   <View className="shrink flex-row">
                     <Badge className="shrink rounded-full bg-white px-2 py-1">
                       <Text className="font-medium text-[#E02922] text-xs">
-                        {route.localizedValues.distance.text}
+                        {plan.distanceInMeters / 1000} km
                       </Text>
                     </Badge>
                   </View>
@@ -158,32 +143,30 @@ export default function Screen() {
                     Perjalanan
                   </Text>
                   <View className="flex-row items-center gap-1">
-                    {route.legs[0].stepsOverview.multiModalSegments.map(
-                      (leg, idx, arr) => {
-                        let IconComp = FootprintsIcon;
-                        if (leg.travelMode === "TRANSIT") {
-                          IconComp = BusFrontIcon;
-                        }
-
-                        return (
-                          // biome-ignore lint/suspicious/noArrayIndexKey: TODO
-                          <Fragment key={idx}>
-                            <Icon
-                              as={IconComp}
-                              className="text-white"
-                              size={28}
-                            />
-                            {idx !== arr.length - 1 && (
-                              <Icon
-                                as={ChevronRightIcon}
-                                className="text-white"
-                                size={24}
-                              />
-                            )}
-                          </Fragment>
-                        );
+                    {plan.plans.map((p, idx, arr) => {
+                      let IconComp = FootprintsIcon;
+                      if (p.type === "bus") {
+                        IconComp = BusFrontIcon;
                       }
-                    )}
+
+                      return (
+                        // biome-ignore lint/suspicious/noArrayIndexKey: TODO
+                        <Fragment key={idx}>
+                          <Icon
+                            as={IconComp}
+                            className="text-white"
+                            size={28}
+                          />
+                          {idx !== arr.length - 1 && (
+                            <Icon
+                              as={ChevronRightIcon}
+                              className="text-white"
+                              size={24}
+                            />
+                          )}
+                        </Fragment>
+                      );
+                    })}
                   </View>
                 </View>
               </View>

@@ -2,7 +2,6 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Icon } from "@/components/ui/icon";
 import { Text } from "@/components/ui/text";
-import { decode as decodePolyline } from "@/lib/polyline";
 import { useTripPlanStore } from "@/stores/use-trip-plan-store";
 import BottomSheet, { BottomSheetScrollView } from "@gorhom/bottom-sheet";
 import { router } from "expo-router";
@@ -10,11 +9,12 @@ import {
   ArrowLeftIcon,
   BusFrontIcon,
   FootprintsIcon,
+  MapPinIcon,
   TicketIcon,
 } from "lucide-react-native";
-import { Fragment, useMemo, useRef } from "react";
+import { useRef } from "react";
 import { View } from "react-native";
-import MapView, { Polyline, PROVIDER_GOOGLE } from "react-native-maps";
+import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
 import {
   SafeAreaView,
   useSafeAreaInsets,
@@ -22,26 +22,16 @@ import {
 
 export default function Screen() {
   const bottomSheetRef = useRef<BottomSheet>(null);
-  const { route, request } = useTripPlanStore();
+  const { plan } = useTripPlanStore();
   const insets = useSafeAreaInsets();
 
-  const region = useMemo(() => {
-    const latMin = route.viewport.low.latitude;
-    const latMax = route.viewport.high.latitude;
-    const lngMin = route.viewport.low.longitude;
-    const lngMax = route.viewport.high.longitude;
-
-    return {
-      latitude: (latMin + latMax) / 2,
-      longitude: (lngMin + lngMax) / 2,
-      latitudeDelta: latMax - latMin + 0.015,
-      longitudeDelta: lngMax - lngMin + 0.015,
-    };
-  }, [route]);
+  if (!plan) {
+    return null;
+  }
 
   return (
-    <SafeAreaView className="flex-1 bg-white">
-      <View className="flex-row items-center gap-2 bg-white px-4 py-2">
+    <SafeAreaView className="flex-1 bg-[#F3F5F9]">
+      <View className="flex-row items-center gap-2 bg-[#F3F5F9] px-4 py-2">
         <Button onPress={() => router.back()} size="icon" variant="ghost">
           <Icon as={ArrowLeftIcon} className="text-black" size={24} />
         </Button>
@@ -50,7 +40,6 @@ export default function Screen() {
       <MapView
         loadingEnabled
         provider={PROVIDER_GOOGLE}
-        region={region}
         showsBuildings={false}
         showsIndoors={false}
         showsPointsOfInterest={false}
@@ -59,11 +48,10 @@ export default function Screen() {
         }}
         zoomControlEnabled={true}
         zoomEnabled={true}
-      >
-        <Polylines />
-      </MapView>
+      />
 
       <BottomSheet
+        backgroundStyle={{ backgroundColor: "#F3F5F9" }}
         enableDynamicSizing={false}
         ref={bottomSheetRef}
         snapPoints={["20%", "80%"]}
@@ -75,31 +63,29 @@ export default function Screen() {
         >
           <View className="gap-2">
             <Text className="font-bold text-black">
-              {request.origin.address} - {request.destination.address}
+              {plan.fromAddress} - {plan.toAddress}
             </Text>
             <View className="flex-row flex-wrap items-center gap-2">
               <Badge className="rounded-full bg-[#DADADA] px-2 py-1">
                 <Text className="font-medium text-black text-xs">
-                  {route.localizedValues.distance.text}
+                  {plan.durationInMinutes} menit
                 </Text>
               </Badge>
               <Badge className="rounded-full bg-[#DADADA] px-2 py-1">
                 <Text className="font-medium text-black text-xs">
-                  {route.localizedValues.transitFare.text ?? "Gratis"}
+                  {plan.price.toLocaleString("id-ID", {
+                    style: "currency",
+                    currency: "IDR",
+                    minimumFractionDigits: 0,
+                  })}
                 </Text>
               </Badge>
             </View>
           </View>
-          <View className="flex-row gap-2">
-            <Button className="flex-1 bg-[#D41D07] active:bg-[#D41D07]/80">
-              <Icon as={TicketIcon} className="text-white" size={20} />
-              <Text className="font-medium text-white text-xs">Beli Tiket</Text>
-            </Button>
-            <Button className="flex-1 bg-[#D41D07] active:bg-[#D41D07]/80">
-              <Icon as={BusFrontIcon} className="text-white" size={20} />
-              <Text className="font-medium text-white text-xs">Detail Bus</Text>
-            </Button>
-          </View>
+          <Button className="flex-1 bg-[#D41D07] active:bg-[#D41D07]/80">
+            <Icon as={TicketIcon} className="text-white" size={20} />
+            <Text className="font-medium text-white text-xs">Beli Tiket</Text>
+          </Button>
           <Plan />
         </BottomSheetScrollView>
       </BottomSheet>
@@ -107,68 +93,145 @@ export default function Screen() {
   );
 }
 
-function Polylines() {
-  const { route } = useTripPlanStore();
-  const decodedPolylines = route.legs[0].steps.map((step) =>
-    decodePolyline(step.polyline.encodedPolyline)
-  );
-
-  return route.legs[0].steps.map((step, index) => (
-    // biome-ignore lint/suspicious/noArrayIndexKey: TODO
-    <Fragment key={index}>
-      {step.travelMode === "WALK" && (
-        <Polyline
-          coordinates={decodedPolylines[index].map((point) => ({
-            latitude: point[0],
-            longitude: point[1],
-          }))}
-          geodesic={true}
-          // biome-ignore lint/suspicious/noArrayIndexKey: TODO
-          key={`${index}-walk`}
-          lineDashPattern={[10, 5]}
-          strokeColor={"#4287f5"}
-          strokeWidth={8}
-        />
-      )}
-      {step.travelMode === "TRANSIT" && (
-        <Polyline
-          coordinates={decodedPolylines[index].map((point) => ({
-            latitude: point[0],
-            longitude: point[1],
-          }))}
-          // biome-ignore lint/suspicious/noArrayIndexKey: TODO
-          key={`${index}-transit`}
-          strokeColor={"#f54242"}
-          strokeWidth={5}
-        />
-      )}
-    </Fragment>
-  ));
-}
-
 function Plan() {
-  const { route } = useTripPlanStore();
+  const { plan } = useTripPlanStore();
+
+  if (!plan) {
+    return null;
+  }
+
   return (
     <View className="flex-1 gap-2">
-      {route.legs[0].steps.map((step, index) => {
-        let IconComponent = FootprintsIcon;
-        if (step.travelMode === "TRANSIT") {
-          IconComponent = BusFrontIcon;
-        }
-
-        return (
-          // biome-ignore lint/suspicious/noArrayIndexKey: TODO
-          <View className="gap-4 rounded-lg border p-2" key={index}>
-            <View className="flex-row items-center gap-2">
-              <Icon as={IconComponent} className="text-black" size={20} />
-              <View className="flex-1">
-                <Text className="text-pretty font-medium text-black text-xs">
-                  {step.navigationInstruction.instructions}
-                </Text>
+      {plan.plans.map((p, idx, arr) => {
+        if (p.type === "bus") {
+          return (
+            <View className="gap-2" key={p.id}>
+              <View className="flex-row gap-2">
+                <View className="items-center gap-1">
+                  <View className="size-3 rounded-full bg-[#A90101]" />
+                  <View className="min-h-8 w-[2px] flex-1 bg-[#D41D07]" />
+                </View>
+                <View className="flex-1 gap-2">
+                  <Text className="font-semibold text-[#4CD964] text-xs">
+                    Start
+                  </Text>
+                  <Text className="font-semibold text-black text-xs">
+                    {p.startingStop}
+                  </Text>
+                  <View className="flex-row items-center gap-2">
+                    <View className="items-center justify-center rounded-lg bg-[#B31E4E] p-2">
+                      <Text className="font-semibold text-white text-xs">
+                        {p.bus.code}
+                      </Text>
+                    </View>
+                    <Text className="font-semibold text-[#D41D07] text-xs">
+                      {p.bus.name}
+                    </Text>
+                  </View>
+                  <View className="rounded-lg bg-white p-2">
+                    {p.options.map((option) => (
+                      <View className="gap-2" key={option.id}>
+                        <View className="flex-row items-center gap-2">
+                          <Icon
+                            as={BusFrontIcon}
+                            className="text-[#D41D07]"
+                            size={24}
+                          />
+                          <View className="items-center justify-center rounded-lg bg-[#D41D07] p-2">
+                            <Text className="font-semibold text-white text-xs">
+                              {p.bus.code}
+                            </Text>
+                          </View>
+                          <View className="items-center justify-center rounded-lg bg-[#D41D07] p-2">
+                            <Text className="font-semibold text-white text-xs">
+                              {option.code}
+                            </Text>
+                          </View>
+                        </View>
+                        <View className="flex-row items-center justify-between gap-2">
+                          <View className="flex-row items-center gap-2">
+                            <View className="rounded-lg bg-[#F2F2F2] px-4 py-2">
+                              <Text className="font-semibold text-black text-xs">
+                                Tujuan Akhir
+                              </Text>
+                            </View>
+                            <Button className="h-fit w-fit bg-[#D41D07] active:bg-[#D41D07]/80">
+                              <Icon
+                                as={BusFrontIcon}
+                                className="text-white"
+                                size={16}
+                              />
+                              <Text className="font-medium text-white text-xs">
+                                Detail Bus
+                              </Text>
+                            </Button>
+                          </View>
+                          <Text className="font-bold text-black text-xl">
+                            {option.durationInMinutes}{" "}
+                            <Text className="text-[#CDCDCD]">min</Text>
+                          </Text>
+                        </View>
+                        <Text className="font-bold text-black text-xs">
+                          {option.startingStop} - {option.endingStop}
+                        </Text>
+                      </View>
+                    ))}
+                  </View>
+                </View>
+              </View>
+              <View className="flex-row gap-2">
+                <View className="size-3 rounded-full bg-[#A90101]" />
+                <View className="flex-1 gap-2">
+                  <Text className="font-semibold text-[#D41D07] text-xs">
+                    Exit
+                  </Text>
+                  <Text className="font-semibold text-black text-xs">
+                    {p.endingStop}
+                  </Text>
+                  <View className="h-[2px] w-full bg-[#CDCDCD]" />
+                </View>
               </View>
             </View>
-          </View>
-        );
+          );
+        }
+
+        if (p.type === "walk") {
+          return (
+            <View className="flex-row gap-2" key={p.id}>
+              <View className="items-center gap-1">
+                <Icon as={FootprintsIcon} className="text-black" size={12} />
+                <View className="min-h-8 w-[2px] bg-[#D9D9D9]" />
+                {p.details ? (
+                  <Icon as={MapPinIcon} className="text-black" size={12} />
+                ) : null}
+              </View>
+              <View className="flex-1 gap-2">
+                <Text className="font-semibold text-black text-xs">
+                  {p.instruction}
+                </Text>
+                {p.details ? (
+                  <View className="rounded-lg bg-white p-2">
+                    <Text className="font-semibold text-black text-xs">
+                      Detail Rute
+                    </Text>
+                    {p.details.map((detail) => (
+                      <View key={detail}>
+                        <Text className="ml-4 font-semibold text-black text-xs">
+                          {detail}
+                        </Text>
+                      </View>
+                    ))}
+                  </View>
+                ) : null}
+                {idx !== arr.length - 1 ? (
+                  <View className="h-[2px] w-full bg-[#CDCDCD]" />
+                ) : null}
+              </View>
+            </View>
+          );
+        }
+
+        return null;
       })}
     </View>
   );
