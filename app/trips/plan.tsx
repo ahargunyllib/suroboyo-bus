@@ -82,7 +82,10 @@ export default function Screen() {
               </Badge>
             </View>
           </View>
-          <Button className="flex-1 bg-[#D41D07] shadow-none active:bg-[#D41D07]/80">
+          <Button
+            className="flex-1 bg-[#D41D07] shadow-none active:bg-[#D41D07]/80"
+            onPress={() => router.push({ pathname: "/tickets/buy" })}
+          >
             <Icon as={TicketIcon} className="text-white" size={20} />
             <Text className="font-medium text-white text-xs">Beli Tiket</Text>
           </Button>
@@ -155,7 +158,14 @@ function Plan() {
                                 Tujuan Akhir
                               </Text>
                             </View>
-                            <Button className="h-fit w-fit bg-[#D41D07] shadow-none active:bg-[#D41D07]/80">
+                            <Button
+                              className="h-fit w-fit bg-[#D41D07] shadow-none active:bg-[#D41D07]/80"
+                              onPress={() =>
+                                router.push(
+                                  `/trips/bus?stepId=${step.id}&optionId=${option.id}`
+                                )
+                              }
+                            >
                               <Icon
                                 as={BusFrontIcon}
                                 className="text-white"
