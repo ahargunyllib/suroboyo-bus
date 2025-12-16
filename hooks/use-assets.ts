@@ -9,6 +9,10 @@ export const ASSETS = {
   ONBOARDING_3: 4,
 
   ICON: 5,
+
+  GOOGLE_LOGO: 6,
+  APPLE_LOGO: 7,
+  FACEBOOK_LOGO: 8,
 };
 
 export const useAssets = () =>
@@ -19,4 +23,7 @@ export const useAssets = () =>
     require("../assets/onboarding-2.png"),
     require("../assets/onboarding-3.png"),
     require("../assets/icon.png"),
+    require("../assets/google-logo.png"),
+    require("../assets/apple-logo.png"),
+    require("../assets/facebook-logo.png"),
   ]);

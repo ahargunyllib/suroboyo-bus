@@ -1,17 +1,27 @@
 import { type RegisterRequest, registerSchema } from "@/api/auth/dto";
 import { useRegister } from "@/api/auth/query";
+import { FormField, FormInput } from "@/components/form";
 import { Button } from "@/components/ui/button";
 import { Icon } from "@/components/ui/icon";
+import { Text } from "@/components/ui/text";
+import { ASSETS, useAssets } from "@/hooks/use-assets";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Image } from "expo-image";
 import { router } from "expo-router";
 import { ArrowLeftIcon } from "lucide-react-native";
 import { Controller, useForm } from "react-hook-form";
-import { Alert, KeyboardAvoidingView, Platform, ScrollView, View } from "react-native";
+import {
+  Alert,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  View,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { FormField, FormInput } from "../../components/form";
-import { Text } from "../../components/ui/text";
 
 export default function Screen() {
+  const [assets] = useAssets();
+
   const form = useForm<RegisterRequest>({
     defaultValues: {
       email: "",
@@ -27,16 +37,12 @@ export default function Screen() {
   const onSubmitHandler = form.handleSubmit((data) => {
     registerMutation.mutate(data, {
       onSuccess: () => {
-        Alert.alert(
-          "Registrasi Berhasil",
-          undefined,
-          [
-            {
-              text: "OK",
-              onPress: () => router.replace("/login"),
-            },
-          ],
-        );
+        Alert.alert("Registrasi Berhasil", undefined, [
+          {
+            text: "OK",
+            onPress: () => router.replace("/login"),
+          },
+        ]);
       },
       onError: (error) => {
         Alert.alert("Registrasi Gagal", error.message ?? "Terjadi kesalahan");
@@ -157,9 +163,36 @@ export default function Screen() {
             <View className="h-px flex-1 bg-[#D9D9D9]" />
           </View>
           <View className="flex-row items-center justify-center gap-4">
-            <View className="size-16 rounded-full bg-red-200" />
-            <View className="size-16 rounded-full bg-red-200" />
-            <View className="size-16 rounded-full bg-red-200" />
+            <View className="size-12 items-center justify-center rounded-full bg-[#D9D9D9]">
+              <Image
+                source={assets?.[ASSETS.GOOGLE_LOGO]}
+                style={{
+                  width: "50%",
+                  height: "50%",
+                  resizeMode: "cover",
+                }}
+              />
+            </View>
+            <View className="size-12 items-center justify-center rounded-full bg-black">
+              <Image
+                source={assets?.[ASSETS.APPLE_LOGO]}
+                style={{
+                  width: "50%",
+                  height: "50%",
+                  resizeMode: "cover",
+                }}
+              />
+            </View>
+            <View className="size-12 items-center justify-center rounded-full bg-black">
+              <Image
+                source={assets?.[ASSETS.FACEBOOK_LOGO]}
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  resizeMode: "cover",
+                }}
+              />
+            </View>
           </View>
         </ScrollView>
       </KeyboardAvoidingView>
