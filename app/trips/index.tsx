@@ -67,7 +67,11 @@ export default function Screen() {
                 <Icon as={LocateIcon} className="text-black" size={16} />
               </View>
             </View>
-            <Button size="icon" variant="ghost">
+            <Button
+              onPress={() => setSearch({ from: "", to: "" })}
+              size="icon"
+              variant="ghost"
+            >
               <Icon as={XIcon} className="text-black" size={16} />
             </Button>
           </View>
@@ -86,7 +90,9 @@ export default function Screen() {
               </View>
             </View>
             <Button
-              onPress={() => router.push("/trips/plan")}
+              onPress={() =>
+                setSearch((prev) => ({ from: prev.to, to: prev.from }))
+              }
               size="icon"
               variant="ghost"
             >
