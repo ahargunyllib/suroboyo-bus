@@ -7,7 +7,7 @@ export const plans = [
     durationInMinutes: 29,
     distanceInMeters: 4300,
     price: 2500,
-    plans: [
+    steps: [
       {
         id: 1,
         type: "walk" as const,

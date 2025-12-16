@@ -143,9 +143,9 @@ export default function Screen() {
                     Perjalanan
                   </Text>
                   <View className="flex-row items-center gap-1">
-                    {plan.plans.map((p, idx, arr) => {
+                    {plan.steps.map((step, idx, arr) => {
                       let IconComp = FootprintsIcon;
-                      if (p.type === "bus") {
+                      if (step.type === "bus") {
                         IconComp = BusFrontIcon;
                       }
 

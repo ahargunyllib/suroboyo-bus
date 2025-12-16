@@ -102,10 +102,10 @@ function Plan() {
 
   return (
     <View className="flex-1 gap-2">
-      {plan.plans.map((p, idx, arr) => {
-        if (p.type === "bus") {
+      {plan.steps.map((step, idx, arr) => {
+        if (step.type === "bus") {
           return (
-            <View className="gap-2" key={p.id}>
+            <View className="gap-2" key={step.id}>
               <View className="flex-row gap-2">
                 <View className="items-center gap-1">
                   <View className="size-3 rounded-full bg-[#A90101]" />
@@ -116,20 +116,20 @@ function Plan() {
                     Start
                   </Text>
                   <Text className="font-semibold text-black text-xs">
-                    {p.startingStop}
+                    {step.startingStop}
                   </Text>
                   <View className="flex-row items-center gap-2">
                     <View className="items-center justify-center rounded-lg bg-[#B31E4E] p-2">
                       <Text className="font-semibold text-white text-xs">
-                        {p.bus.code}
+                        {step.bus.code}
                       </Text>
                     </View>
                     <Text className="font-semibold text-[#D41D07] text-xs">
-                      {p.bus.name}
+                      {step.bus.name}
                     </Text>
                   </View>
                   <View className="rounded-lg bg-white p-2">
-                    {p.options.map((option) => (
+                    {step.options.map((option) => (
                       <View className="gap-2" key={option.id}>
                         <View className="flex-row items-center gap-2">
                           <Icon
@@ -139,7 +139,7 @@ function Plan() {
                           />
                           <View className="items-center justify-center rounded-lg bg-[#D41D07] p-2">
                             <Text className="font-semibold text-white text-xs">
-                              {p.bus.code}
+                              {step.bus.code}
                             </Text>
                           </View>
                           <View className="items-center justify-center rounded-lg bg-[#D41D07] p-2">
@@ -186,7 +186,7 @@ function Plan() {
                     Exit
                   </Text>
                   <Text className="font-semibold text-black text-xs">
-                    {p.endingStop}
+                    {step.endingStop}
                   </Text>
                   <View className="h-[2px] w-full bg-[#CDCDCD]" />
                 </View>
@@ -195,26 +195,26 @@ function Plan() {
           );
         }
 
-        if (p.type === "walk") {
+        if (step.type === "walk") {
           return (
-            <View className="flex-row gap-2" key={p.id}>
+            <View className="flex-row gap-2" key={step.id}>
               <View className="items-center gap-1">
                 <Icon as={FootprintsIcon} className="text-black" size={12} />
                 <View className="min-h-8 w-[2px] bg-[#D9D9D9]" />
-                {p.details ? (
+                {step.details ? (
                   <Icon as={MapPinIcon} className="text-black" size={12} />
                 ) : null}
               </View>
               <View className="flex-1 gap-2">
                 <Text className="font-semibold text-black text-xs">
-                  {p.instruction}
+                  {step.instruction}
                 </Text>
-                {p.details ? (
+                {step.details ? (
                   <View className="rounded-lg bg-white p-2">
                     <Text className="font-semibold text-black text-xs">
                       Detail Rute
                     </Text>
-                    {p.details.map((detail) => (
+                    {step.details.map((detail) => (
                       <View key={detail}>
                         <Text className="ml-4 font-semibold text-black text-xs">
                           {detail}
