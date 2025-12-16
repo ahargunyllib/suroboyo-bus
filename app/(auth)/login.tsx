@@ -1,20 +1,21 @@
+import { loginSchema, type LoginRequest } from "@/api/auth/dto";
+import { useLogin } from "@/api/auth/query";
 import { Button } from "@/components/ui/button";
 import { Icon } from "@/components/ui/icon";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Link, router } from "expo-router";
 import { ArrowLeftIcon } from "lucide-react-native";
 import { Controller, useForm } from "react-hook-form";
-import { KeyboardAvoidingView, Platform, ScrollView, View } from "react-native";
+import {
+  Alert,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  View,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { z } from "zod";
 import { FormField, FormInput } from "../../components/form";
 import { Text } from "../../components/ui/text";
-
-const loginSchema = z.object({
-  email: z.string().email("Email tidak valid"),
-  password: z.string().min(8, "Password harus terdiri dari minimal 8 karakter"),
-});
-type LoginRequest = z.infer<typeof loginSchema>;
 
 export default function Screen() {
   const form = useForm<LoginRequest>({
@@ -25,8 +26,17 @@ export default function Screen() {
     resolver: zodResolver(loginSchema),
   });
 
+  const loginMutation = useLogin();
+
   const onSubmitHandler = form.handleSubmit((data) => {
-    console.log(data);
+    loginMutation.mutate(data, {
+      onSuccess: () => {
+        router.dismissTo("/(tabs)");
+      },
+      onError: (error) => {
+        Alert.alert("Login Gagal", error.message ?? "Terjadi kesalahan");
+      },
+    });
   });
 
   return (
@@ -90,9 +100,12 @@ export default function Screen() {
             </FormField>
             <Button
               className="rounded-full bg-[#E02922] shadow-none active:bg-[#E02922]/80"
+              disabled={loginMutation.isPending}
               onPress={onSubmitHandler}
             >
-              <Text className="font-medium text-white">Daftar</Text>
+              <Text className="font-medium text-white">
+                {loginMutation.isPending ? "Memproses..." : "Login"}
+              </Text>
             </Button>
           </View>
           <Text className="text-center text-xs">

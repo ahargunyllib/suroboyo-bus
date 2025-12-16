@@ -1,29 +1,15 @@
+import { type RegisterRequest, registerSchema } from "@/api/auth/dto";
+import { useRegister } from "@/api/auth/query";
 import { Button } from "@/components/ui/button";
 import { Icon } from "@/components/ui/icon";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { router } from "expo-router";
 import { ArrowLeftIcon } from "lucide-react-native";
 import { Controller, useForm } from "react-hook-form";
-import { KeyboardAvoidingView, Platform, ScrollView, View } from "react-native";
+import { Alert, KeyboardAvoidingView, Platform, ScrollView, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { z } from "zod";
 import { FormField, FormInput } from "../../components/form";
 import { Text } from "../../components/ui/text";
-
-const registerSchema = z
-  .object({
-    email: z.string().email("Email tidak valid"),
-    fullName: z.string().min(1, "Nama lengkap harus diisi"),
-    password: z
-      .string()
-      .min(8, "Password harus terdiri dari minimal 8 karakter"),
-    confirmPassword: z.string().min(8, "Konfirmasi password harus diisi"),
-  })
-  .refine((data) => data.password === data.confirmPassword, {
-    message: "Password dan konfirmasi password tidak sesuai",
-  });
-
-type RegisterRequest = z.infer<typeof registerSchema>;
 
 export default function Screen() {
   const form = useForm<RegisterRequest>({
@@ -36,8 +22,26 @@ export default function Screen() {
     resolver: zodResolver(registerSchema),
   });
 
+  const registerMutation = useRegister();
+
   const onSubmitHandler = form.handleSubmit((data) => {
-    console.log(data);
+    registerMutation.mutate(data, {
+      onSuccess: () => {
+        Alert.alert(
+          "Registrasi Berhasil",
+          undefined,
+          [
+            {
+              text: "OK",
+              onPress: () => router.replace("/login"),
+            },
+          ],
+        );
+      },
+      onError: (error) => {
+        Alert.alert("Registrasi Gagal", error.message ?? "Terjadi kesalahan");
+      },
+    });
   });
 
   return (
@@ -137,9 +141,12 @@ export default function Screen() {
             </FormField>
             <Button
               className="rounded-full bg-[#E02922] shadow-none active:bg-[#E02922]/80"
+              disabled={registerMutation.isPending}
               onPress={onSubmitHandler}
             >
-              <Text className="font-medium text-white">Daftar</Text>
+              <Text className="font-medium text-white">
+                {registerMutation.isPending ? "Memproses..." : "Daftar"}
+              </Text>
             </Button>
           </View>
           <View className="flex-row items-center gap-2">

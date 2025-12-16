@@ -4,16 +4,15 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { router } from "expo-router";
 import { ArrowLeftIcon } from "lucide-react-native";
 import { Controller, useForm } from "react-hook-form";
-import { KeyboardAvoidingView, Platform, ScrollView, View } from "react-native";
+import { Alert, KeyboardAvoidingView, Platform, ScrollView, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { z } from "zod";
+import {
+  type ResetPasswordRequest,
+  resetPasswordSchema,
+} from "../../api/auth/dto";
+import { useResetPassword } from "../../api/auth/query";
 import { FormField, FormInput } from "../../components/form";
 import { Text } from "../../components/ui/text";
-
-const resetPasswordSchema = z.object({
-  email: z.string().email("Email tidak valid"),
-});
-type ResetPasswordRequest = z.infer<typeof resetPasswordSchema>;
 
 export default function Screen() {
   const form = useForm<ResetPasswordRequest>({
@@ -23,8 +22,22 @@ export default function Screen() {
     resolver: zodResolver(resetPasswordSchema),
   });
 
+  const resetPasswordMutation = useResetPassword();
+
   const onSubmitHandler = form.handleSubmit((data) => {
-    console.log(data);
+    resetPasswordMutation.mutate(data, {
+      onSuccess: (response) => {
+        Alert.alert("Berhasil", response.message, [
+          {
+            text: "OK",
+            onPress: () => router.back(),
+          },
+        ]);
+      },
+      onError: (error) => {
+        Alert.alert("Gagal", error.message ?? "Terjadi kesalahan");
+      },
+    });
   });
 
   return (
@@ -75,10 +88,11 @@ export default function Screen() {
             </FormField>
             <Button
               className="rounded-full bg-[#E02922] shadow-none active:bg-[#E02922]/80"
+              disabled={resetPasswordMutation.isPending}
               onPress={onSubmitHandler}
             >
               <Text className="font-medium text-white">
-                Atur Ulang Password
+                {resetPasswordMutation.isPending ? "Memproses..." : "Atur Ulang Password"}
               </Text>
             </Button>
           </View>

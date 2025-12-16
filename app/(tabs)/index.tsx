@@ -1,7 +1,9 @@
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Icon } from "@/components/ui/icon";
 import { Text } from "@/components/ui/text";
 import { ASSETS, useAssets } from "@/hooks/use-assets";
+import { useQuery } from "@tanstack/react-query";
 import { Image } from "expo-image";
 import { router } from "expo-router";
 import {
@@ -19,13 +21,15 @@ import {
   SafeAreaView,
   useSafeAreaInsets,
 } from "react-native-safe-area-context";
+import { currentUserQueryOptions } from "../../api/auth/query";
 
 export default function Home() {
   const insets = useSafeAreaInsets();
+
+  const { data } = useQuery(currentUserQueryOptions());
+
   const time = new Date().getHours();
   let greeting = "Selamat Malam";
-  const fullName = "Bayu Prasetya";
-
   if (time >= 5 && time < 12) {
     greeting = "Selamat Pagi";
   } else if (time >= 12 && time < 15) {
@@ -49,10 +53,18 @@ export default function Home() {
         <View className="bg-[#D41D07]" style={{ height: insets.top }} />
         <View className="flex-row items-start justify-between bg-[#D41D07] px-8 pt-4">
           <View className="flex-row gap-2">
-            <View className="size-10 rounded-full bg-white" />
+            <Avatar alt="User Avatar" className="size-10 rounded-full bg-white">
+              <AvatarFallback className="bg-white">
+                <Text className="font-bold text-black">
+                  {data?.fullName?.at(0)?.toUpperCase()}
+                </Text>
+              </AvatarFallback>
+            </Avatar>
             <View>
               <Text className="font-medium text-white text-xs">{greeting}</Text>
-              <Text className="font-bold text-base text-white">{fullName}</Text>
+              <Text className="font-bold text-base text-white">
+                {data?.fullName}
+              </Text>
             </View>
           </View>
           <View className="flex-row gap-2">
