@@ -10,6 +10,7 @@ import {
   BottleWineIcon,
   Building2Icon,
   CloudIcon,
+  MapIcon,
   MessageCircleMoreIcon,
   PlusIcon,
   RouteIcon,
@@ -118,6 +119,7 @@ export default function Home() {
           </View>
           <View className="flex-row items-center gap-2">
             <View className="h-px flex-1 bg-black" />
+            {/* TODO: Update the icon */}
             <Icon as={CloudIcon} className="text-black" size={32} />
             <Icon as={CloudIcon} className="text-black" size={32} />
             <Icon as={CloudIcon} className="text-black" size={32} />
@@ -138,12 +140,12 @@ function Menu() {
     },
     {
       title: "Info Rute",
-      icon: PlusIcon,
+      icon: RouteIcon,
       onPress: () => router.push("/routes"),
     },
     {
-      title: "Peta Tematik",
-      icon: RouteIcon,
+      title: "Halte Tersedia",
+      icon: MapIcon,
       onPress: () => router.push("/maps"),
     },
     {
