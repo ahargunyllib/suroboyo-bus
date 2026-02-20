@@ -13,6 +13,8 @@ export const ASSETS = {
   GOOGLE_LOGO: 6,
   APPLE_LOGO: 7,
   FACEBOOK_LOGO: 8,
+
+  QRIS_LOGO: 9,
 };
 
 export const useAssets = () =>
@@ -26,4 +28,5 @@ export const useAssets = () =>
     require("../assets/google-logo.png"),
     require("../assets/apple-logo.png"),
     require("../assets/facebook-logo.png"),
+    require("../assets/qris-logo.png"),
   ]);
