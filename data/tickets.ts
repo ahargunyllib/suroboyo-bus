@@ -42,7 +42,11 @@ export const ownedTickets = [
       name: "Tiket Pelajar",
       price: 2500,
     },
+    discount: null,
     status: "active" as const,
+    payment: {
+      bank: "BCA",
+    },
     createdAt: new Date(),
     expiresAt: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000), // 1 days later
   },
@@ -53,6 +57,10 @@ export const ownedTickets = [
       id: "general-ticket",
       name: "Tiket Umum",
       price: 5000,
+    },
+    discount: null,
+    payment: {
+      bank: "Mandiri",
     },
     status: "expired" as const,
     createdAt: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000), // 10 days ago
@@ -65,6 +73,10 @@ export const ownedTickets = [
       id: "general-ticket",
       name: "Tiket Umum",
       price: 5000,
+    },
+    discount: null,
+    payment: {
+      bank: "BRI",
     },
     status: "used" as const,
     createdAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000), // 3 days ago
@@ -80,3 +92,7 @@ export const ownedTickets = [
     },
   },
 ];
+
+export function getOwnedTicketById(id: string) {
+  return ownedTickets.find((ticket) => ticket.id === id);
+}
