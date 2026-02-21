@@ -26,8 +26,8 @@ export default function Screen() {
   return (
     <SafeAreaView className="flex-1 bg-[#F3F5F9]">
       <Header backgroundColor="#F3F5F9" title="FAQ" />
-      <ScrollView className="flex-1 px-4" contentContainerClassName="gap-4">
-        <View className="items-center justify-center">
+      <ScrollView className="flex-1 px-4" contentContainerClassName="gap-8">
+        <View className="items-center justify-center gap-2">
           <Text className="text-center font-bold text-[#4CD964]">
             Pertanyaan yang sering diajukan
           </Text>
