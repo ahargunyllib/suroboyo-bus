@@ -237,6 +237,7 @@ function Services() {
             <View className="shrink flex-row">
               <Button
                 className="h-fit rounded-full bg-white py-1 shadow-none active:bg-white/80"
+                onPress={() => router.push("/attractions")}
                 size="sm"
               >
                 <Text className="font-bold text-[#D41D07] text-[10px]">
