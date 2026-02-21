@@ -1,5 +1,5 @@
 import { currentUserQueryOptions } from "@/api/auth/query";
-import { Button } from "@/components/ui/button";
+import Header from "@/components/header";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Icon } from "@/components/ui/icon";
 import { Text } from "@/components/ui/text";
@@ -7,12 +7,8 @@ import { getOwnedTicketById } from "@/data/tickets";
 import { ASSETS, useAssets } from "@/hooks/use-assets";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { Image } from "expo-image";
-import { router, useGlobalSearchParams } from "expo-router";
-import {
-  ArrowLeftIcon,
-  GraduationCapIcon,
-  QrCodeIcon,
-} from "lucide-react-native";
+import { useGlobalSearchParams } from "expo-router";
+import { GraduationCapIcon, QrCodeIcon } from "lucide-react-native";
 import { ScrollView, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -33,12 +29,7 @@ export default function Screen() {
 
   return (
     <SafeAreaView className="flex-1 bg-white">
-      <View className="flex-row items-center gap-2 bg-white px-4 py-2">
-        <Button onPress={() => router.back()} size="icon" variant="ghost">
-          <Icon as={ArrowLeftIcon} className="text-black" size={24} />
-        </Button>
-        <Text className="font-bold text-black">Detail Tiket</Text>
-      </View>
+      <Header backgroundColor="white" title="Detail Tiket" />
       <ScrollView
         className="flex-1 px-4"
         contentContainerClassName="gap-4 pb-8"

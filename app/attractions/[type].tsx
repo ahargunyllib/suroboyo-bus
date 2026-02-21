@@ -1,3 +1,4 @@
+import Header from "@/components/header";
 import { Button } from "@/components/ui/button";
 import { Text } from "@/components/ui/text";
 import {
@@ -7,8 +8,8 @@ import {
   getCategoryDisplayName,
 } from "@/data/attractions";
 import { Image } from "expo-image";
-import { router, useLocalSearchParams } from "expo-router";
-import { ArrowLeftIcon, SearchIcon, StarIcon } from "lucide-react-native";
+import { useLocalSearchParams } from "expo-router";
+import { SearchIcon, StarIcon } from "lucide-react-native";
 import { ScrollView, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Card } from "../../components/ui/card";
@@ -37,12 +38,7 @@ export default function AttractionCategoryScreen() {
 
   return (
     <SafeAreaView className="flex-1 bg-[#F3F5F9]">
-      <View className="flex-row items-center gap-2 px-4 py-2">
-        <Button onPress={() => router.back()} size="icon" variant="ghost">
-          <Icon as={ArrowLeftIcon} className="text-black" size={24} />
-        </Button>
-        <Text className="font-bold">Attraction Site</Text>
-      </View>
+      <Header backgroundColor="#F3F5F9" title="Attraction Site" />
 
       <ScrollView
         className="flex-1 px-4"

@@ -1,5 +1,5 @@
+import Header from "@/components/header";
 import { Button } from "@/components/ui/button";
-import { Icon } from "@/components/ui/icon";
 import { Text } from "@/components/ui/text";
 import { getTicketOfferById } from "@/data/tickets";
 import { ASSETS, useAssets } from "@/hooks/use-assets";
@@ -9,8 +9,8 @@ import BottomSheet, {
   BottomSheetScrollView,
 } from "@gorhom/bottom-sheet";
 import { Image } from "expo-image";
-import { router, useGlobalSearchParams } from "expo-router";
-import { ArrowLeftIcon, ChevronRightCircleIcon } from "lucide-react-native";
+import { useGlobalSearchParams } from "expo-router";
+import { ChevronRightCircleIcon } from "lucide-react-native";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Dimensions, ScrollView, View } from "react-native";
 import {
@@ -75,12 +75,7 @@ export default function Screen() {
 
   return (
     <SafeAreaView className="flex-1 bg-white">
-      <View className="flex-row items-center gap-2 bg-white px-4 py-2">
-        <Button onPress={() => router.back()} size="icon" variant="ghost">
-          <Icon as={ArrowLeftIcon} className="text-black" size={24} />
-        </Button>
-        <Text className="font-bold text-black">Beli Tiket</Text>
-      </View>
+      <Header backgroundColor="white" title="Pembayaran" />
       <ScrollView className="flex-1 px-4" contentContainerClassName="gap-4">
         <View className="items-center justify-center gap-2 text-center">
           <Text className="font-bold text-black">

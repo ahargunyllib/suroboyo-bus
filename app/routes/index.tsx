@@ -1,8 +1,7 @@
-import { Button } from "@/components/ui/button";
+import Header from "@/components/header";
 import { Icon } from "@/components/ui/icon";
 import { Text } from "@/components/ui/text";
-import { router } from "expo-router";
-import { ArrowLeftIcon, ClockIcon } from "lucide-react-native";
+import { ClockIcon } from "lucide-react-native";
 import { FlatList, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { routes } from "../../data/routes";
@@ -10,12 +9,7 @@ import { routes } from "../../data/routes";
 export default function Screen() {
   return (
     <SafeAreaView className="flex-1 bg-[#F3F5F9]">
-      <View className="flex-row items-center gap-2 bg-[#F3F5F9] px-4 py-2">
-        <Button onPress={() => router.back()} size="icon" variant="ghost">
-          <Icon as={ArrowLeftIcon} className="text-black" size={24} />
-        </Button>
-        <Text className="font-bold text-black">Info Rute</Text>
-      </View>
+      <Header backgroundColor="#F3F5F9" title="Info Rute" />
       <View className="flex-1 gap-4">
         <FlatList
           className="flex-1 px-4"

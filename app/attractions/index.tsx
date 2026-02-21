@@ -1,3 +1,4 @@
+import Header from "@/components/header";
 import { Button } from "@/components/ui/button";
 import { Icon } from "@/components/ui/icon";
 import { Text } from "@/components/ui/text";
@@ -5,7 +6,6 @@ import { events } from "@/data/attractions";
 import { Image } from "expo-image";
 import { router } from "expo-router";
 import {
-  ArrowLeftIcon,
   ChurchIcon,
   CoffeeIcon,
   SearchIcon,
@@ -45,12 +45,7 @@ export default function AttractionSiteScreen() {
 
   return (
     <SafeAreaView className="flex-1 bg-[#F3F5F9]">
-      <View className="flex-row items-center gap-2 px-4 py-2">
-        <Button onPress={() => router.back()} size="icon" variant="ghost">
-          <Icon as={ArrowLeftIcon} className="text-black" size={24} />
-        </Button>
-        <Text className="font-bold">Attraction Site</Text>
-      </View>
+      <Header backgroundColor="#F3F5F9" title="Attraction Site" />
 
       <ScrollView
         className="flex-1 px-4"

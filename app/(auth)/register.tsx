@@ -2,13 +2,11 @@ import { type RegisterRequest, registerSchema } from "@/api/auth/dto";
 import { useRegister } from "@/api/auth/query";
 import { FormField, FormInput } from "@/components/form";
 import { Button } from "@/components/ui/button";
-import { Icon } from "@/components/ui/icon";
 import { Text } from "@/components/ui/text";
 import { ASSETS, useAssets } from "@/hooks/use-assets";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Image } from "expo-image";
 import { router } from "expo-router";
-import { ArrowLeftIcon } from "lucide-react-native";
 import { Controller, useForm } from "react-hook-form";
 import {
   Alert,
@@ -18,6 +16,7 @@ import {
   View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import Header from "@/components/header";
 
 export default function Screen() {
   const [assets] = useAssets();
@@ -52,12 +51,7 @@ export default function Screen() {
 
   return (
     <SafeAreaView className="flex-1 bg-white">
-      <View className="flex-row items-center gap-2 bg-white px-4 py-2">
-        <Button onPress={() => router.back()} size="icon" variant="ghost">
-          <Icon as={ArrowLeftIcon} className="text-black" size={24} />
-        </Button>
-        <Text className="font-bold text-black">Buat Akun</Text>
-      </View>
+      <Header backgroundColor="#FFFFFF" title="Buat Akun" />
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         className="w-full flex-1"

@@ -6,7 +6,6 @@ import { useTripPlanStore } from "@/stores/use-trip-plan-store";
 import BottomSheet, { BottomSheetScrollView } from "@gorhom/bottom-sheet";
 import { router } from "expo-router";
 import {
-  ArrowLeftIcon,
   BusFrontIcon,
   FootprintsIcon,
   MapPinIcon,
@@ -15,6 +14,7 @@ import {
 import { useRef } from "react";
 import { View } from "react-native";
 import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
+import Header from '@/components/header';
 import {
   SafeAreaView,
   useSafeAreaInsets,
@@ -31,12 +31,7 @@ export default function Screen() {
 
   return (
     <SafeAreaView className="flex-1 bg-[#F3F5F9]">
-      <View className="flex-row items-center gap-2 bg-[#F3F5F9] px-4 py-2">
-        <Button onPress={() => router.back()} size="icon" variant="ghost">
-          <Icon as={ArrowLeftIcon} className="text-black" size={24} />
-        </Button>
-        <Text className="font-bold text-black">Rencana Perjalanan</Text>
-      </View>
+      <Header backgroundColor="#F3F5F9" title="Rencana Perjalanan" />
       <MapView
         loadingEnabled
         provider={PROVIDER_GOOGLE}
