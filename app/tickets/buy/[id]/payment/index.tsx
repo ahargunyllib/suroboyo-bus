@@ -129,6 +129,7 @@ export default function Screen() {
             variant="ghost"
           >
             <Text className="font-bold">Tata Cara Pembayaran</Text>
+            {/* TODO: Wrap Icon as */}
             <ChevronRightCircleIcon />
           </Button>
         </View>
