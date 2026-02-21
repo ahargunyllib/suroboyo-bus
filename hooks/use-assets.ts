@@ -15,6 +15,9 @@ export const ASSETS = {
   FACEBOOK_LOGO: 8,
 
   QRIS_LOGO: 9,
+  GPN_LOGO: 10,
+
+  DUMMY_QRIS: 11,
 };
 
 export const useAssets = () =>
@@ -29,4 +32,6 @@ export const useAssets = () =>
     require("../assets/apple-logo.png"),
     require("../assets/facebook-logo.png"),
     require("../assets/qris-logo.png"),
+    require("../assets/gpn-logo.png"),
+    require("../assets/dummy-qris.png"),
   ]);

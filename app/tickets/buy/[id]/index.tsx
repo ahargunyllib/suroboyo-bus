@@ -1,11 +1,11 @@
 import { Button } from "@/components/ui/button";
 import { Icon } from "@/components/ui/icon";
 import { Text } from "@/components/ui/text";
+import { getTicketOfferById } from "@/data/tickets";
 import { router, useGlobalSearchParams } from "expo-router";
 import { ArrowLeftIcon } from "lucide-react-native";
 import { ScrollView, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { getTicketOfferById } from "../../../../data/tickets";
 
 export default function Screen() {
   const { id } = useGlobalSearchParams<{
@@ -105,7 +105,15 @@ export default function Screen() {
             })}
           </Text>
         </View>
-        <Button className="bg-[#E02922] active:bg-[#E02922]/80">
+        <Button
+          className="bg-[#E02922] active:bg-[#E02922]/80"
+          onPress={() =>
+            router.push({
+              pathname: "/tickets/buy/[id]/payment",
+              params: { id },
+            })
+          }
+        >
           <Text className="font-bold text-white text-xs">Lanjut</Text>
         </Button>
       </View>
