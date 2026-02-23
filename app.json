@@ -20,7 +20,11 @@
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.ahargunyllib.suroboyobus",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -31,7 +35,20 @@
         "googleMaps": {
           "apiKey": "process.env.EXPO_PUBLIC_GOOGLE_API_KEY"
         }
+      },
+      "package": "com.ahargunyllib.suroboyobus"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "346e1743-da93-4829-a631-8e04ce64409d"
       }
+    },
+    "owner": "ahargunyllib",
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/346e1743-da93-4829-a631-8e04ce64409d"
     }
   }
 }
