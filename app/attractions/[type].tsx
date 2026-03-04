@@ -10,13 +10,17 @@ import {
 import { Image } from "expo-image";
 import { useLocalSearchParams } from "expo-router";
 import { SearchIcon, StarIcon } from "lucide-react-native";
+import { useState } from "react";
 import { ScrollView, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Card } from "../../components/ui/card";
 import { Icon } from "../../components/ui/icon";
+import { Input } from "../../components/ui/input";
 
 export default function AttractionCategoryScreen() {
   const { type } = useLocalSearchParams<{ type: string }>();
+
+  const [query, setQuery] = useState({ search: "" });
 
   // Convert URL slug to category type
   const categoryMap: Record<string, AttractionCategory> = {
@@ -27,7 +31,9 @@ export default function AttractionCategoryScreen() {
   };
 
   const category = categoryMap[type || ""] || "kuliner";
-  const attractions = getAttractionsByCategory(category);
+  const attractions = getAttractionsByCategory(category).filter((attraction) =>
+    attraction.name.toLowerCase().includes(query.search.toLowerCase())
+  );
   const displayName = getCategoryDisplayName(category);
 
   // Customize search placeholder based on category
@@ -44,11 +50,18 @@ export default function AttractionCategoryScreen() {
         className="flex-1 px-4"
         contentContainerClassName="gap-4 pb-8"
       >
-        <View className="flex-row items-center gap-2 rounded-lg border border-gray-200 bg-white px-4 py-3">
-          <Icon as={SearchIcon} size={16} />
-          <Text className="font-medium text-[#8B8B8B] text-xs">
-            {searchPlaceholder}
-          </Text>
+        <View className="relative flex-1">
+          <Input
+            className="peer flex-row items-center gap-2 rounded-lg border border-gray-200 bg-white px-4 py-3 ps-9 font-medium text-xs shadow-none placeholder:text-[#8B8B8B]"
+            onChangeText={(text) =>
+              setQuery((prev) => ({ ...prev, search: text }))
+            }
+            placeholder={searchPlaceholder}
+            value={query.search}
+          />
+          <View className="absolute start-0 top-0 bottom-0 flex items-center justify-center ps-3 peer-disabled:opacity-50">
+            <Icon as={SearchIcon} className="text-black" size={16} />
+          </View>
         </View>
 
         <View className="gap-2">

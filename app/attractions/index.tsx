@@ -8,7 +8,6 @@ import { router } from "expo-router";
 import {
   ChurchIcon,
   CoffeeIcon,
-  SearchIcon,
   StoreIcon,
   TreesIcon,
 } from "lucide-react-native";
@@ -51,12 +50,12 @@ export default function AttractionSiteScreen() {
         className="flex-1 px-4"
         contentContainerClassName="gap-4 pb-8"
       >
-        <View className="flex-row items-center gap-2 rounded-lg border border-gray-200 bg-white px-4 py-3">
+        {/* <View className="flex-row items-center gap-2 rounded-lg border border-gray-200 bg-white px-4 py-3">
           <Icon as={SearchIcon} size={16} />
           <Text className="font-medium text-[#8B8B8B] text-xs">
             Ayo cari destinasi anda!
           </Text>
-        </View>
+        </View> */}
 
         <View className="gap-2">
           <Text className="font-bold">Mari bereksplorasi</Text>
