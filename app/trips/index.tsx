@@ -1,3 +1,4 @@
+import Header from "@/components/header";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Icon } from "@/components/ui/icon";
@@ -5,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Text } from "@/components/ui/text";
 import { plans } from "@/data/plans";
 import { cn } from "@/lib/utils";
+import { useFavoritePlansStore } from "@/stores/use-favorite-plans-store";
 import { useTripPlanStore } from "@/stores/use-trip-plan-store";
 import { router } from "expo-router";
 import {
@@ -22,10 +24,13 @@ import {
 import { Fragment, useState } from "react";
 import { FlatList, ScrollView, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import Header from '@/components/header';
 
 export default function Screen() {
   const [search, setSearch] = useState({ from: "", to: "" });
+  const [activeTab, setActiveTab] = useState("available-routes");
+
+  const { favoritePlanIds, toggleFavorite, isFavorite } =
+    useFavoritePlansStore();
 
   const filteredPlans = plans.filter((plan) => {
     if (search.from === "" || search.to === "") {
@@ -38,6 +43,11 @@ export default function Screen() {
     const toMatch = plan.toAddress
       .toLowerCase()
       .includes(search.to.toLowerCase());
+
+    if (activeTab === "favorite") {
+      return fromMatch && toMatch && favoritePlanIds.includes(plan.id);
+    }
+
     return fromMatch && toMatch;
   });
 
@@ -96,7 +106,7 @@ export default function Screen() {
           </View>
         </View>
 
-        <Tab />
+        <Tab activeTab={activeTab} onTabChange={setActiveTab} />
 
         <FlatList
           className="flex-1"
@@ -171,7 +181,14 @@ export default function Screen() {
                   </View>
                 </View>
               </View>
-              <Icon as={StarIcon} className="text-white" size={24} />
+              <TouchableOpacity onPress={() => toggleFavorite(plan.id)}>
+                <Icon
+                  as={StarIcon}
+                  className="text-white"
+                  fill={isFavorite(plan.id) ? "white" : "none"}
+                  size={24}
+                />
+              </TouchableOpacity>
             </TouchableOpacity>
           )}
         />
@@ -180,7 +197,13 @@ export default function Screen() {
   );
 }
 
-function Tab() {
+function Tab({
+  activeTab,
+  onTabChange,
+}: {
+  activeTab: string;
+  onTabChange: (key: string) => void;
+}) {
   const tabs = [
     {
       key: "available-routes",
@@ -198,7 +221,6 @@ function Tab() {
       type: "icon" as const,
     },
   ];
-  const [activeTab, _setActiveTab] = useState(tabs[0]);
 
   return (
     <ScrollView
@@ -211,11 +233,12 @@ function Tab() {
         <Button
           className={cn(
             "h-6 rounded-full shadow-none",
-            activeTab.key === tab.key
+            activeTab === tab.key
               ? "bg-[#E02922] active:bg-[#E02922]/90"
               : "border border-[#E02922] bg-white active:bg-[#FDEDED]"
           )}
           key={tab.key}
+          onPress={() => onTabChange(tab.key)}
           size="sm"
           variant="outline"
         >
@@ -223,7 +246,7 @@ function Tab() {
             <Text
               className={cn(
                 "font-semibold text-xs",
-                activeTab.key === tab.key
+                activeTab === tab.key
                   ? "text-white group-active:text-white"
                   : "text-[#E02922] group-active:text-[#E02922]"
               )}
