@@ -11,7 +11,7 @@ import { Image } from "expo-image";
 import { useLocalSearchParams } from "expo-router";
 import { SearchIcon, StarIcon } from "lucide-react-native";
 import { useState } from "react";
-import { ScrollView, View } from "react-native";
+import { Linking, Platform, ScrollView, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Card } from "../../components/ui/card";
 import { Icon } from "../../components/ui/icon";
@@ -42,6 +42,24 @@ export default function AttractionCategoryScreen() {
       ? "Ayo cari kuliner anda!"
       : `Ayo cari ${displayName.toLowerCase()} anda!`;
 
+  const openMaps = (attraction: Attraction) => {
+    if (!attraction.coordinate) {
+      return;
+    }
+
+    const { latitude, longitude } = attraction.coordinate;
+    const label = encodeURIComponent(attraction.name);
+
+    const url = Platform.select({
+      ios: `maps:0,0?q=${label}@${latitude},${longitude}`,
+      android: `geo:${latitude},${longitude}?q=${latitude},${longitude}(${label})`,
+    });
+
+    if (url) {
+      Linking.openURL(url);
+    }
+  };
+
   return (
     <SafeAreaView className="flex-1 bg-[#F3F5F9]">
       <Header backgroundColor="#F3F5F9" title="Attraction Site" />
@@ -71,10 +89,7 @@ export default function AttractionCategoryScreen() {
             <AttractionCard
               attraction={attraction}
               key={attraction.id}
-              onPress={() => {
-                // TODO: Navigate to detail screen
-                console.log("Navigate to detail:", attraction.id);
-              }}
+              onPress={() => openMaps(attraction)}
             />
           ))}
         </View>
