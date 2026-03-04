@@ -119,10 +119,18 @@ export default function Home() {
           </View>
           <View className="flex-row items-center gap-2">
             <View className="h-px flex-1 bg-black" />
-            {/* TODO: Update the icon */}
-            <Icon as={CloudIcon} className="text-black" size={32} />
-            <Icon as={CloudIcon} className="text-black" size={32} />
-            <Icon as={CloudIcon} className="text-black" size={32} />
+            <Image
+              source={require("@/assets/instagram.png")}
+              style={{ width: 24, height: 20, resizeMode: "contain" }}
+            />
+            <Image
+              source={require("@/assets/tiktok.png")}
+              style={{ width: 24, height: 20, resizeMode: "contain" }}
+            />
+            <Image
+              source={require("@/assets/yt.png")}
+              style={{ width: 32, height: 20, resizeMode: "contain" }}
+            />
             <View className="h-px flex-1 bg-black" />
           </View>
         </View>
