@@ -140,7 +140,7 @@ export default function Screen() {
                 </Text>
                 {assets ? (
                   <Image
-                    source={assets[ASSETS.QRIS_LOGO]}
+                    source={assets[ASSETS.QRIS_LOGO].localUri}
                     style={{
                       resizeMode: "contain",
                       width: 100,

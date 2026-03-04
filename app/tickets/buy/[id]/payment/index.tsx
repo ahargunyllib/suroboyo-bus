@@ -87,7 +87,7 @@ export default function Screen() {
           <View className="flex-row items-center justify-between gap-12">
             {assets ? (
               <Image
-                source={assets[ASSETS.QRIS_LOGO]}
+                source={assets[ASSETS.QRIS_LOGO].localUri}
                 style={{
                   height: 32,
                   resizeMode: "contain",
@@ -97,7 +97,7 @@ export default function Screen() {
             ) : null}
             {assets ? (
               <Image
-                source={assets[ASSETS.GPN_LOGO]}
+                source={assets[ASSETS.GPN_LOGO].localUri}
                 style={{
                   height: 32,
                   aspectRatio: 0.77 / 1,
@@ -108,7 +108,7 @@ export default function Screen() {
           </View>
           {assets ? (
             <Image
-              source={assets[ASSETS.DUMMY_QRIS]}
+              source={assets[ASSETS.DUMMY_QRIS].localUri}
               style={{
                 width: width * 0.7,
                 height: width * 0.7,

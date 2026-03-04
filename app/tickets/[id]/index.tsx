@@ -47,7 +47,7 @@ export default function Screen() {
           <CardContent className="items-center gap-2">
             {assets ? (
               <Image
-                source={assets[ASSETS.DUMMY_QRIS]}
+                source={assets[ASSETS.DUMMY_QRIS].localUri}
                 style={{ width: 280, height: 280, resizeMode: "cover" }}
               />
             ) : null}

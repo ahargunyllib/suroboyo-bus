@@ -280,7 +280,7 @@ function Offer() {
         {assets !== undefined && (
           <Image
             contentFit="contain"
-            source={assets[ASSETS.SUROBOYO_BUS_ILLUSTRATION]}
+            source={assets[ASSETS.SUROBOYO_BUS_ILLUSTRATION].localUri}
             style={{
               width: "50%",
               height: "100%",

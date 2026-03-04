@@ -159,7 +159,7 @@ export default function Screen() {
           <View className="flex-row items-center justify-center gap-4">
             <View className="size-12 items-center justify-center rounded-full bg-[#D9D9D9]">
               <Image
-                source={assets?.[ASSETS.GOOGLE_LOGO]}
+                source={assets?.[ASSETS.GOOGLE_LOGO].localUri}
                 style={{
                   width: "50%",
                   height: "50%",
@@ -169,7 +169,7 @@ export default function Screen() {
             </View>
             <View className="size-12 items-center justify-center rounded-full bg-black">
               <Image
-                source={assets?.[ASSETS.APPLE_LOGO]}
+                source={assets?.[ASSETS.APPLE_LOGO].localUri}
                 style={{
                   width: "50%",
                   height: "50%",
@@ -179,7 +179,7 @@ export default function Screen() {
             </View>
             <View className="size-12 items-center justify-center rounded-full bg-black">
               <Image
-                source={assets?.[ASSETS.FACEBOOK_LOGO]}
+                source={assets?.[ASSETS.FACEBOOK_LOGO].localUri}
                 style={{
                   width: "100%",
                   height: "100%",

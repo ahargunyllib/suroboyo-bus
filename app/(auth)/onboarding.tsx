@@ -17,7 +17,7 @@ export default function Screen() {
     <SafeAreaView className="flex-1" edges={["bottom", "left", "right"]}>
       {assets ? (
         <Image
-          source={assets[ASSETS.ONBOARDING]}
+          source={assets[ASSETS.ONBOARDING].localUri}
           style={{ resizeMode: "cover", height: "80%" }}
         />
       ) : null}

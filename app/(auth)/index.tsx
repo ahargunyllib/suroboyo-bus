@@ -89,7 +89,7 @@ export default function OnboardingScreen() {
           // but derive a stable, rounded currentIndex for logic
           renderItem={({ item }) => (
             <Image
-              source={assets?.[item.image]}
+              source={assets?.[item.image].localUri}
               style={{
                 height: width,
                 resizeMode: "cover",
