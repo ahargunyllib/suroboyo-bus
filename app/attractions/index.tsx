@@ -87,7 +87,7 @@ export default function AttractionSiteScreen() {
           {events.map((event) => (
             <Image
               key={event.id}
-              source={{ uri: event.imageUrl }}
+              source={event.imageUrl}
               style={{
                 height: 140,
                 width: "100%",

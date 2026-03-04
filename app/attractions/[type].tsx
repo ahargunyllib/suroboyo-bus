@@ -109,7 +109,7 @@ function AttractionCard({
     <Card className="overflow-hidden p-4">
       <View className="flex-row gap-3 p-0">
         <Image
-          source={{ uri: attraction.imageUrl }}
+          source={attraction.imageUrl}
           style={{
             width: 80,
             height: 80,

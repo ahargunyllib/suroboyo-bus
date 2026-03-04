@@ -14,7 +14,7 @@ export type Attraction = {
   rating?: number;
   address?: string;
   description?: string;
-  imageUrl: string;
+  imageUrl: number | string;
   coordinate?: {
     latitude: number;
     longitude: number;
@@ -24,19 +24,19 @@ export type Attraction = {
 export type Event = {
   id: string;
   title: string;
-  imageUrl: string;
+  imageUrl: number | string;
 };
 
 export const events: Event[] = [
   {
     id: "event-1",
     title: "Festival Kuliner Surabaya 2024",
-    imageUrl: "https://picsum.photos/seed/event-1/400/200",
+    imageUrl: require("@/assets/dummy/event-1.png"),
   },
   {
     id: "event-2",
     title: "Surabaya Music Festival",
-    imageUrl: "https://picsum.photos/seed/event-2/400/200",
+    imageUrl: require("@/assets/dummy/event-2.png"),
   },
 ];
 
@@ -50,7 +50,7 @@ export const attractions: Attraction[] = [
     address: "Jl. Embong Malang No.78J, Kedungdoro",
     description:
       "Rawon legendaris dengan kuah hitam pekat dan daging empuk yang terkenal sejak tahun 1950-an",
-    imageUrl: "https://picsum.photos/seed/kuliner1/300/200",
+    imageUrl: require("@/assets/dummy/rawon.png"),
     coordinate: { latitude: -7.262, longitude: 112.7352 },
   },
   {
@@ -61,7 +61,7 @@ export const attractions: Attraction[] = [
     address: "Jl. Gubeng Pojok No.1-3, Gubeng",
     description:
       "Depot legendaris dengan masakan Chinese-Indonesian sejak 1932, terkenal dengan ayam kodok dan ikan goreng kecap",
-    imageUrl: "https://picsum.photos/seed/kuliner2/300/200",
+    imageUrl: require("@/assets/dummy/depot-sederhanana.png"),
     coordinate: { latitude: -7.2747, longitude: 112.752 },
   },
   {
@@ -72,7 +72,7 @@ export const attractions: Attraction[] = [
     address: "Jl. Ambengan No.41, Genteng",
     description:
       "Soto ayam khas Surabaya dengan kuah bening segar, suwiran ayam kampung, dan bumbu rahasia turun temurun",
-    imageUrl: "https://picsum.photos/seed/kuliner3/300/200",
+    imageUrl: require("@/assets/dummy/sate-klopo.png"),
     coordinate: { latitude: -7.258, longitude: 112.748 },
   },
   {
@@ -83,7 +83,7 @@ export const attractions: Attraction[] = [
     address: "Jl. Kalianyar Timur Blok H No.13, Benowo",
     description:
       "Bakmi halus dengan topping daging dan pangsit yang lezat, favorit warga Surabaya sejak puluhan tahun",
-    imageUrl: "https://picsum.photos/seed/kuliner4/300/200",
+    imageUrl: require("@/assets/dummy/bakmi-cahaya.png"),
     coordinate: { latitude: -7.2469, longitude: 112.6769 },
   },
 
@@ -96,7 +96,7 @@ export const attractions: Attraction[] = [
     address: "Jl. Basuki Rahmat No.8-12, Embong Kaliasin",
     description:
       "Mall ikonik Surabaya dengan 6 gedung yang saling terhubung, menawarkan berbagai brand internasional",
-    imageUrl: "https://picsum.photos/seed/mall1/300/200",
+    imageUrl: require("@/assets/dummy/tunjungan-plaza.png"),
     coordinate: { latitude: -7.2618, longitude: 112.7382 },
   },
   {
@@ -107,7 +107,7 @@ export const attractions: Attraction[] = [
     address: "Jl. Puncak Indah Lontar No.2, Babakan",
     description:
       "Mall modern dengan konsep lifestyle dan entertainment, dilengkapi food court dan bioskop",
-    imageUrl: "https://picsum.photos/seed/mall2/300/200",
+    imageUrl: require("@/assets/dummy/pakuwon-mall.png"),
     coordinate: { latitude: -7.2886, longitude: 112.6656 },
   },
   {
@@ -118,7 +118,7 @@ export const attractions: Attraction[] = [
     address: "Jl. Mayjend Sungkono No.87-89, Pakis",
     description:
       "Kompleks mixed-use premium dengan hotel, apartemen, dan retail area yang sangat lengkap",
-    imageUrl: "https://picsum.photos/seed/mall3/300/200",
+    imageUrl: require("@/assets/dummy/ciputra-world.png"),
     coordinate: { latitude: -7.293, longitude: 112.7166 },
   },
   {
@@ -129,7 +129,7 @@ export const attractions: Attraction[] = [
     address: "Jl. Manyar Kertoarjo III No.1, Manyar Sabrangan",
     description:
       "Mall family-friendly dengan berbagai tenant lokal dan internasional serta area bermain anak",
-    imageUrl: "https://picsum.photos/seed/mall4/300/200",
+    imageUrl: require("@/assets/dummy/grand-city.png"),
     coordinate: { latitude: -7.2775, longitude: 112.7574 },
   },
 
@@ -142,7 +142,7 @@ export const attractions: Attraction[] = [
     address: "Jl. Gubernur Suryo, Embong Kaliasin",
     description:
       "Taman kota di pusat Surabaya dengan area hijau yang nyaman untuk bersantai dan berolahraga",
-    imageUrl: "https://picsum.photos/seed/park1/300/200",
+    imageUrl: require("@/assets/dummy/taman-ekspresi.png"),
     coordinate: { latitude: -7.2637, longitude: 112.7413 },
   },
   {
@@ -153,7 +153,7 @@ export const attractions: Attraction[] = [
     address: "Jl. Taman Apsari, Pabean Cantian",
     description:
       "Alun-alun dengan air mancur dancing fountain yang spektakuler, tempat berkumpul favorit keluarga",
-    imageUrl: "https://picsum.photos/seed/park2/300/200",
+    imageUrl: require("@/assets/dummy/alun-alun.png"),
     coordinate: { latitude: -7.2566, longitude: 112.7399 },
   },
   {
@@ -164,7 +164,7 @@ export const attractions: Attraction[] = [
     address: "Kawasan Kalimas, Kota Lama",
     description:
       "Wisata naik perahu menyusuri Sungai Kalimas sambil menikmati pemandangan bangunan bersejarah",
-    imageUrl: "https://picsum.photos/seed/park3/300/200",
+    imageUrl: require("@/assets/dummy/wisata-perahu.png"),
     coordinate: { latitude: -7.247, longitude: 112.738 },
   },
   {
@@ -175,7 +175,7 @@ export const attractions: Attraction[] = [
     address: "Jl. Pantai Kenjeran, Bulak",
     description:
       "Kawasan wisata pantai dengan wahana permainan, kuliner seafood, dan pagoda yang indah",
-    imageUrl: "https://picsum.photos/seed/park4/300/200",
+    imageUrl: require("@/assets/dummy/taman-hiburan.png"),
     coordinate: { latitude: -7.2455, longitude: 112.7937 },
   },
 
@@ -186,7 +186,7 @@ export const attractions: Attraction[] = [
     category: "tempat_ibadah",
     description:
       "Masjid bersejarah dengan arsitektur klasik yang menjadi landmark kota Surabaya",
-    imageUrl: "https://picsum.photos/seed/worship1/300/200",
+    imageUrl: require("@/assets/dummy/masjid.png"),
     coordinate: { latitude: -7.2504, longitude: 112.7525 },
   },
   {
@@ -195,7 +195,7 @@ export const attractions: Attraction[] = [
     category: "tempat_ibadah",
     description:
       "Gereja katedral dengan arsitektur gothic yang megah dan menjadi tempat ibadah bersejarah",
-    imageUrl: "https://picsum.photos/seed/worship2/300/200",
+    imageUrl: require("@/assets/dummy/gereja.png"),
     coordinate: { latitude: -7.2579, longitude: 112.7514 },
   },
   {
@@ -204,7 +204,7 @@ export const attractions: Attraction[] = [
     category: "tempat_ibadah",
     description:
       "Pura dengan ornamen tradisional Bali yang indah, tempat ibadah umat Hindu di Surabaya",
-    imageUrl: "https://picsum.photos/seed/worship3/300/200",
+    imageUrl: require("@/assets/dummy/pura.png"),
     coordinate: { latitude: -7.2924, longitude: 112.7378 },
   },
   {
@@ -213,7 +213,7 @@ export const attractions: Attraction[] = [
     category: "tempat_ibadah",
     description:
       "Vihara dengan arsitektur Tiongkok klasik yang megah dan penuh dengan nilai spiritual",
-    imageUrl: "https://picsum.photos/seed/worship4/300/200",
+    imageUrl: require("@/assets/dummy/vihara.png"),
     coordinate: { latitude: -7.2541, longitude: 112.7385 },
   },
   {
@@ -222,7 +222,7 @@ export const attractions: Attraction[] = [
     category: "tempat_ibadah",
     description:
       "Klenteng bersejarah dengan dekorasi merah dan emas yang khas, tempat sembahyang umat Konghucu",
-    imageUrl: "https://picsum.photos/seed/worship5/300/200",
+    imageUrl: require("@/assets/dummy/klenteng.png"),
     coordinate: { latitude: -7.2468, longitude: 112.7372 },
   },
 ];
