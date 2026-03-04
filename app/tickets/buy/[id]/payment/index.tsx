@@ -9,7 +9,7 @@ import BottomSheet, {
   BottomSheetScrollView,
 } from "@gorhom/bottom-sheet";
 import { Image } from "expo-image";
-import { useGlobalSearchParams } from "expo-router";
+import { useGlobalSearchParams, useRouter } from "expo-router";
 import { ChevronRightCircleIcon } from "lucide-react-native";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Dimensions, ScrollView, View } from "react-native";
@@ -24,6 +24,7 @@ export default function Screen() {
   const { id } = useGlobalSearchParams<{
     id: "general-ticket" | "student-ticket";
   }>();
+  const router = useRouter();
   const [assets] = useAssets();
 
   const bottomSheetRef = useRef<BottomSheet>(null);
@@ -66,6 +67,19 @@ export default function Screen() {
     }, 1000);
 
     return () => clearInterval(interval);
+  }, []);
+
+  // Redirect to success page after 5 seconds
+  // biome-ignore lint/correctness/useExhaustiveDependencies: We only want to run this effect once on mount
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      router.replace({
+        pathname: "/tickets/buy/[id]/payment/success",
+        params: { id },
+      });
+    }, 5000);
+
+    return () => clearTimeout(timeout);
   }, []);
 
   const ticket = getTicketOfferById(id);
