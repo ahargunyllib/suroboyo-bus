@@ -5,7 +5,18 @@
     "version": "1.0.0",
     "scheme": "suroboyo-bus",
     "platforms": ["ios", "android"],
-    "plugins": ["expo-router", "expo-font", "expo-asset"],
+    "plugins": [
+      "expo-router",
+      "expo-font",
+      "expo-asset",
+      [
+        "expo-location",
+        {
+          "locationWhenInUsePermission": "Allow $(PRODUCT_NAME) to use your location.",
+          "isAndroidForegroundServiceEnabled": true
+        }
+      ]
+    ],
     "experiments": {
       "typedRoutes": true,
       "tsconfigPaths": true

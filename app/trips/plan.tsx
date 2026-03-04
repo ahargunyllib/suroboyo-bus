@@ -1,9 +1,11 @@
+import Header from "@/components/header";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Icon } from "@/components/ui/icon";
 import { Text } from "@/components/ui/text";
 import { useTripPlanStore } from "@/stores/use-trip-plan-store";
 import BottomSheet, { BottomSheetScrollView } from "@gorhom/bottom-sheet";
+import * as Location from "expo-location";
 import { router } from "expo-router";
 import {
   BusFrontIcon,
@@ -11,10 +13,9 @@ import {
   MapPinIcon,
   TicketIcon,
 } from "lucide-react-native";
-import { useRef } from "react";
-import { View } from "react-native";
+import { useEffect, useRef, useState } from "react";
+import { Alert, View } from "react-native";
 import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
-import Header from '@/components/header';
 import {
   SafeAreaView,
   useSafeAreaInsets,
@@ -22,22 +23,72 @@ import {
 
 export default function Screen() {
   const bottomSheetRef = useRef<BottomSheet>(null);
+  const mapRef = useRef<MapView>(null);
   const { plan } = useTripPlanStore();
   const insets = useSafeAreaInsets();
+  const [userLocation, setUserLocation] = useState<{
+    latitude: number;
+    longitude: number;
+  } | null>(null);
+
+  useEffect(() => {
+    const requestLocation = async () => {
+      const { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== "granted") {
+        Alert.alert(
+          "Izin Lokasi Ditolak",
+          "Aktifkan izin lokasi untuk menampilkan posisi Anda di peta."
+        );
+        return;
+      }
+
+      const location = await Location.getCurrentPositionAsync({
+        accuracy: Location.Accuracy.High,
+      });
+      const { latitude, longitude } = location.coords;
+      setUserLocation({ latitude, longitude });
+
+      mapRef.current?.animateToRegion(
+        {
+          latitude,
+          longitude,
+          latitudeDelta: 0.01,
+          longitudeDelta: 0.01,
+        },
+        1000
+      );
+    };
+
+    requestLocation();
+  }, []);
 
   if (!plan) {
     return null;
   }
 
+  const initialRegion = userLocation
+    ? {
+        latitude: userLocation.latitude,
+        longitude: userLocation.longitude,
+        latitudeDelta: 0.01,
+        longitudeDelta: 0.01,
+      }
+    : undefined;
+
   return (
     <SafeAreaView className="flex-1 bg-[#F3F5F9]">
       <Header backgroundColor="#F3F5F9" title="Rencana Perjalanan" />
       <MapView
+        followsUserLocation
+        initialRegion={initialRegion}
         loadingEnabled
         provider={PROVIDER_GOOGLE}
+        ref={mapRef}
         showsBuildings={false}
         showsIndoors={false}
+        showsMyLocationButton
         showsPointsOfInterest={false}
+        showsUserLocation
         style={{
           flexGrow: 1,
         }}
